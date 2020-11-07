@@ -86,7 +86,7 @@ class Landing extends Controller
                         "id"            => $card["id"],
                         "title"         => $card["title"],
                         "price"         => floatval($card["price_foldingcard"]),
-                        "addOnPrice"    => floatval($productPrices["products"][0]["product_options"]["Envelope"]["price"]),
+                        "addons"        => $productPrices["products"][0]["product_options"],
                         "thumb"         => $encodedImage
                     );
 
