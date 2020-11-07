@@ -63,7 +63,11 @@ h1,h2,h3,h4,h5,h6 {
 
 .tableItem {
     border-radius: 10px;
-    cursor: pointer;
+}
+
+.tableItem a {
+    color: #333;
+    text-decoration: none;
 }
 
 .tableItem .price {
