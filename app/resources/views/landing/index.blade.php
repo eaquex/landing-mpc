@@ -2,5 +2,5 @@
 
 @section('content')
     @include('landing.hero')
-    @include('landing.table')
+    @include('landing.table', get_defined_vars())
 @endsection    

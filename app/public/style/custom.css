@@ -65,6 +65,18 @@ h1,h2,h3,h4,h5,h6 {
     border-radius: 10px;
 }
 
+.tableItem .price {
+    position: absolute;    
+    right: 15px;
+    margin-top: 20px;
+    background-color: #ff4895;
+    font-size: 16px;
+    font-weight: bolder;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+}
+
 .fourItem {
     background-color: #FDBD28;
 }
