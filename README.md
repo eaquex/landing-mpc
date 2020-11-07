@@ -10,7 +10,7 @@ You need to download composer first.
 
 ## Instalation
 
-1. Clone repository (https://github.com/eaquex/landing-mpc.git)[https://github.com/eaquex/landing-mpc.git] to the desired location.
+1. Clone repository [https://github.com/eaquex/landing-mpc.git](https://github.com/eaquex/landing-mpc.git) to the desired location.
 2. Open a terminal/bash in the project directory.
 2. Once in the project directory, locate the "app" directory and next run the command `composer install`
 3. To run the project run the next command `php artisan serve`
