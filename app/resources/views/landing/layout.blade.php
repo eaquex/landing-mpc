@@ -19,7 +19,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-light bg-light static-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><img class="img-fluid" src="{{ asset('images/mypostcardlogo-en.png') }}"/></a>
+            <a class="navbar-brand" href="#"><img class="img-fluid main-logo" src="{{ asset('images/mypostcardlogo-en.png') }}"/></a>
         </div>
     </nav>
 
@@ -37,7 +37,7 @@
     
 
     <!-- Footer -->
-    <footer class="footer bg-light">
+    <footer class="footer bg-light py-5">
         <div class="container">
         <div class="row">
             <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
