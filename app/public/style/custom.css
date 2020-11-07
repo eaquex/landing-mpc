@@ -1,0 +1,87 @@
+body	{
+    font-size: 15px;    
+    font-family: 'Lato', sans-serif;
+    color: #333;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-logo {
+    max-width: 300px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;    
+}
+
+.main-logo:hover {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.hero-bg {
+    background-image: url(../images/hero-desktop.jpg);
+    background-position: center center;
+}
+
+.hero h1 {
+    font-size: 40px;
+    line-height: 40px;
+    color: #333;
+    text-transform: none;
+    margin-bottom: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    display: block;
+    opacity: 1;
+}
+
+.hero a {
+    color: #333;
+}
+
+.hero a:hover {
+    text-decoration: none;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.thumb-image {
+    width: 100%;
+}
+
+.tableItem {
+    border-radius: 10px;
+}
+
+.tableItem a {
+    color: #333;
+    text-decoration: none;
+}
+
+.tableItem .price {
+    position: absolute;    
+    right: 15px;
+    margin-top: 20px;
+    background-color: #ff4895;
+    font-size: 16px;
+    font-weight: bolder;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+}
+
+.fourItem {
+    background-color: #FDBD28;
+}
