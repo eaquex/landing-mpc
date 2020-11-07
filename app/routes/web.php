@@ -15,3 +15,4 @@ use App\Http\Controllers\Landing;
 */
 
 Route::get('/', [Landing::class, 'index']);
+Route::get('/download', [Landing::class, 'download']);

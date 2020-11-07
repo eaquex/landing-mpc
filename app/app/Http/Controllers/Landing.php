@@ -1,10 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
+
+// Temp fix for increment max execution time
+ini_set('max_execution_time', 120);
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Storage;
+use TCPDF;
 
 class Landing extends Controller
 {
@@ -15,10 +19,41 @@ class Landing extends Controller
     {
         $viewParameters = [
             "designList" => $this->requestDesignList()
-        ];
-
+        ];        
 
         return view("landing/index", $viewParameters);
+    }
+
+    public function download(Request $request)
+    {
+        $this->generateDesignListPDF($request->input('id'));
+    }
+
+    /**
+     * Generate PDF for the selected image
+     */
+    private function generateDesignListPDF($id)
+    {
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        // Information
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor("MyPoscard");
+        $pdf->SetTitle("MyPoscard");
+
+        // Scale factor
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        $pdf->setJPEGQuality(100);
+        
+        // A4 Page
+        $pdf->AddPage('P','A5');
+
+        // Image
+        $pdf->SetXY(0, 0);
+        $pdf->Image(storage_path('app/cards/full_' . $id . '.jpg' ), 0, 0, 150, 0, 'JPG');
+
+        // Output
+        $pdf->Output(storage_path('cards/pdf/' . $id .'.pdf'), 'I');
     }
 
     /** 
@@ -39,14 +74,20 @@ class Landing extends Controller
                 
                 foreach ($data as $card)
                 {
+                    // Request product options
+                    $productPrices = $this->getProductPrices($card['id']);
+
                     // Resize image
                     $thumbImage     = $this->downloadImage($card["thumb_url"]);
+                    $largeImage     = $this->downloadImage($card["full_url"], "full_" . $card['id']);
                     $encodedImage   = $this->resizeCardImage($thumbImage);
 
                     $entry = array(
-                        "title"     => $card["title"],
-                        "price"     => $card["price_foldingcard"],
-                        "thumb"     => $encodedImage
+                        "id"            => $card["id"],
+                        "title"         => $card["title"],
+                        "price"         => floatval($card["price_foldingcard"]),
+                        "addOnPrice"    => floatval($productPrices["products"][0]["product_options"]["Envelope"]["price"]),
+                        "thumb"         => $encodedImage
                     );
 
                     $result[] = $entry;
@@ -63,15 +104,40 @@ class Landing extends Controller
     }
 
     /**
+     * Request product prices for a card
+     */
+    private function getProductPrices($id)
+    {
+        try 
+        {
+            $response = Http::get('https://www.mypostcard.com/mobile/product_prices.php?json=1&type=get_postcard_products&currencyiso=EUR&store_id=' . $id);
+
+            if ($response->ok())
+            {
+                return $response->json();                
+            }
+        }
+        catch(Exception $e)        
+        {
+            return false;
+        }
+    }
+
+    /**
      * Download an image from url and save to storage
      */
-    private function downloadImage($url)
+    private function downloadImage($url, $altName="")
     {
-        // Download image
-        $contents   = file_get_contents($url);
         $name       = substr($url, strrpos($url, '/') + 1);
-        $path       = 'cards/'. $name; 
-        Storage::put($path, $contents);
+        $path       = 'cards/' . ($altName == "" ? $name : $altName . ".jpg"); 
+        $realpath   = storage_path('app/' . $path);
+
+        if (!file_exists($realpath))
+        {
+            // Download if not exists
+            $contents   = file_get_contents($url);
+            Storage::put($path, $contents);
+        }
 
         return $path;
     }
